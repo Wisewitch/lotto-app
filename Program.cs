@@ -58,7 +58,7 @@ namespace lotto_app
             else
             {
                 Console.WriteLine("Helyes, mind az 5 szám különböző!\n\n " +
-                    "Nézd meg, nyertél-e volna, ha minden héten megjéátszottad volna ezeket a számokat...   ");
+                    "Nézd meg, nyertél-e volna, ha 1957-től napjainkig, minden héten megjátszottad volna ezeket a számokat...\n\n   ");
             }
 
 
@@ -92,8 +92,9 @@ namespace lotto_app
 
         static void hanyszor()
         {
-            Console.WriteLine(Nyertesszamlista[111]);
+            //Console.WriteLine(Nyertesszamlista[111]);
 
+           
             Console.WriteLine(Nyertesszamlista[3315].Kiirias());
 
             int tatalatKettes = 0;
@@ -177,7 +178,7 @@ namespace lotto_app
 
             }
 
-            Console.WriteLine("Kettes: " + tatalatKettes);
+            Console.WriteLine("A találatok között lett volna\n\n"  + tatalatKettes + " db kettes ");
 
 
             int tatalatHarmas = 0;
@@ -228,8 +229,7 @@ namespace lotto_app
                     (bekertSzamok[2] == Nyertesszamlista[i].Sz2 && bekertSzamok[3] == Nyertesszamlista[i].Sz2 && bekertSzamok[4] == Nyertesszamlista[i].Sz2) ||
                     (bekertSzamok[2] == Nyertesszamlista[i].Sz3 && bekertSzamok[3] == Nyertesszamlista[i].Sz3 && bekertSzamok[4] == Nyertesszamlista[i].Sz3) ||
                     (bekertSzamok[2] == Nyertesszamlista[i].Sz4 && bekertSzamok[3] == Nyertesszamlista[i].Sz4 && bekertSzamok[4] == Nyertesszamlista[i].Sz4) ||
-                    (bekertSzamok[2] == Nyertesszamlista[i].Sz5 && bekertSzamok[3] == Nyertesszamlista[i].Sz5 && bekertSzamok[4] == Nyertesszamlista[i].Sz5) ||
-                                                            
+                    (bekertSzamok[2] == Nyertesszamlista[i].Sz5 && bekertSzamok[3] == Nyertesszamlista[i].Sz5 && bekertSzamok[4] == Nyertesszamlista[i].Sz5)                                                             
                     )
 
                 {
@@ -238,7 +238,7 @@ namespace lotto_app
 
             }
 
-            Console.WriteLine("Hármas: " + tatalatHarmas);
+            Console.WriteLine(tatalatHarmas + " db hármas");
 
             int tatalatNegyes = 0;
 
@@ -272,34 +272,10 @@ namespace lotto_app
 
             }
 
-            Console.WriteLine("Négyes: " + tatalatNegyes);
+            Console.WriteLine( tatalatNegyes + " db négyes ");
 
 
-            //int db = 0; 
-
-            //for (int i = 0; i < Nyertesszamlista.Count; i++)
-            //{
-            //    for (int j = 0; j < bekertSzamok.Length; j++)
-            //    {
-            //        if (Nyertesszamlista[i].Sz1 == bekertSzamok[j])
-            //        {
-            //            db++;
-            //        }
-            //    } 
-            //}
-
-            //Console.WriteLine("aaa" + db);
-
-            //var aaa = Nyertesszamlista.FindIndex(x => x.Sz1 == bekertSzamok[0] && x.Sz2 == bekertSzamok[1]);
-
-            //Console.WriteLine("szorszám " + aaa);
-
-
-            //for (int i = 0; i < Nyertesszamlista.Count; i++)
-            //{
-            //    //Nyertesszamlista[i].Sz1 Contains(bekertSzamok[0]);
-            //    Nyertesszamlista[i].Contains(bekertSzamok[0]);
-            //}
+            
 
 
             int tatalatOtos = 0;
@@ -315,10 +291,9 @@ namespace lotto_app
                 }
             }
 
-            Console.WriteLine("Ötös: " + tatalatOtos);
+            Console.WriteLine( tatalatOtos + " db Ötös - vagyis telitalálat " );
 
-
-        }
+                    }
 
 
 
