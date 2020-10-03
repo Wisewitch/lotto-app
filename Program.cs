@@ -82,8 +82,6 @@ namespace lotto_app2
         static void hanyszor(List<Nyertesszamok> Nyertesszamlista)
         {
             Console.WriteLine(ny.sz1 == szam1 && ny.sz2 == szam2).Count());
-
-
         }
 
         /*  static void Kiertekel()
