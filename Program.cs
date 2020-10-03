@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
-namespace lotto_app2
+namespace lotto_app
 {
     class Program
     {
@@ -20,30 +20,36 @@ namespace lotto_app2
         // Beadandó a megoldás github linkje! - feltölteni
 
 
+        static List<Nyertesszamok> Nyertesszamlista = new List<Nyertesszamok>();
+
+        static int[] bekertSzamok = new int[5];
 
         static void Bekeres()
         {
-
             Console.WriteLine("Adj meg egy számot 1 és 90 között. ");
-            int szam1 = Convert.ToInt32(Console.ReadLine());
-
+            bekertSzamok[0] = Convert.ToInt32(Console.ReadLine());
 
             Console.WriteLine("Adj meg egy 2. számot 1 és 90 között. Nem lehet ugyanaz, mint az előző.  ");
-            int szam2 = Convert.ToInt32(Console.ReadLine());
+            bekertSzamok[1] = Convert.ToInt32(Console.ReadLine());
 
             Console.WriteLine("Adj meg egy 3. számot 1 és 90 között. Nem lehet ugyanaz, mint az előzők.  ");
-            int szam3 = Convert.ToInt32(Console.ReadLine());
+            bekertSzamok[2] = Convert.ToInt32(Console.ReadLine());
 
             Console.WriteLine("Adj meg egy 4. számot 1 és 90 között. Nem lehet ugyanaz, mint az előzők.  ");
-            int szam4 = Convert.ToInt32(Console.ReadLine());
+            bekertSzamok[3] = Convert.ToInt32(Console.ReadLine());
 
             Console.WriteLine("Adj meg egy 5. számot 1 és 90 között. Nem lehet ugyanaz, mint az előzők.  ");
-            int szam5 = Convert.ToInt32(Console.ReadLine());
+            bekertSzamok[4] = Convert.ToInt32(Console.ReadLine());
 
-            Console.WriteLine("A kapott számok: " + szam1 + " " + szam2 + " " + szam3 + " " + szam4 + " " + szam5);
+            Console.WriteLine("A kapott számok: " + bekertSzamok[0] + " " + bekertSzamok[1] + " " + 
+                bekertSzamok[2] + " " + bekertSzamok[3] + " " + bekertSzamok[4]);
 
-            if (szam1 == szam2 || szam1 == szam3 || szam1 == szam4 || szam1 == szam5 || szam2 == szam3 || szam2 == szam4 || szam2 == szam5 ||
-            szam3 == szam4 || szam3 == szam5 || szam4 == szam5)
+            if (bekertSzamok[0] == bekertSzamok[1] || bekertSzamok[0] == bekertSzamok[2] || 
+                bekertSzamok[0] == bekertSzamok[3] || bekertSzamok[0] == bekertSzamok[4] ||
+                bekertSzamok[1] == bekertSzamok[2] || bekertSzamok[1] == bekertSzamok[3] || 
+                bekertSzamok[1] == bekertSzamok[4] || bekertSzamok[1] == bekertSzamok[4] ||
+                bekertSzamok[2] == bekertSzamok[3] || bekertSzamok[2] == bekertSzamok[4] ||
+                bekertSzamok[3] == bekertSzamok[4])
 
             {
                 Console.WriteLine("legalább 2 szám azonos az 5 közül");
@@ -53,80 +59,275 @@ namespace lotto_app2
             {
                 Console.WriteLine("Helyes, mind az 5 szám különböző!\n\n " +
                     "Nézd meg, nyertél-e volna, ha minden héten megjéátszottad volna ezeket a számokat...   ");
-
             }
+
+
+            Array.Sort(bekertSzamok);
         }
 
-        static List<Nyertesszamok> Nyertesszamlista = new List<Nyertesszamok>();
-        static void Beolvas() //  beolvassa a húzásokat
+
+        static void Beolvas() //  beolvassa a húzásokat tartalmazó fájlt
         {
             StreamReader sr = new StreamReader("otos.csv");
-            int i = 0;
+      
+
             while (!sr.EndOfStream)
             {
                 string sor = sr.ReadLine();
-                string[] temp = sor.Split(';');
-                Nyertesszamok ny = new Nyertesszamok();
-                ny.sz1 = Convert.ToInt32(temp[11]);
-                ny.sz2 = Convert.ToInt32(temp[12]);
-                ny.sz3 = Convert.ToInt32(temp[13]);
-                ny.sz4 = Convert.ToInt32(temp[14]);
-                ny.sz5 = Convert.ToInt32(temp[15]);
+                string[] temp = sor.Split(';');               
+                Nyertesszamok ny = new Nyertesszamok(
+                    Convert.ToInt32(temp[11]),
+                    Convert.ToInt32(temp[12]),
+                    Convert.ToInt32(temp[13]),
+                    Convert.ToInt32(temp[14]),
+                    Convert.ToInt32(temp[15]));
+
                 Nyertesszamlista.Add(ny);
 
             }
+
             sr.Close();
         }
 
 
-        static void hanyszor(List<Nyertesszamok> Nyertesszamlista)
+        static void hanyszor()
         {
-            Console.WriteLine(ny.sz1 == szam1 && ny.sz2 == szam2).Count());
+            Console.WriteLine(Nyertesszamlista[111]);
+
+            Console.WriteLine(Nyertesszamlista[3315].Kiirias());
+
+            int tatalatKettes = 0;
+
+            for (int i = 0; i < Nyertesszamlista.Count; i++)
+            {
+                // 1. és x. bekért szám egyezik a nyertes számok sorainak 1-5. tagjával 
+                if ((bekertSzamok[0] == Nyertesszamlista[i].Sz1 && bekertSzamok[1] == Nyertesszamlista[i].Sz1) ||
+                    (bekertSzamok[0] == Nyertesszamlista[i].Sz2 && bekertSzamok[1] == Nyertesszamlista[i].Sz2) ||
+                    (bekertSzamok[0] == Nyertesszamlista[i].Sz3 && bekertSzamok[1] == Nyertesszamlista[i].Sz3) ||
+                    (bekertSzamok[0] == Nyertesszamlista[i].Sz4 && bekertSzamok[1] == Nyertesszamlista[i].Sz4) ||
+                    (bekertSzamok[0] == Nyertesszamlista[i].Sz5 && bekertSzamok[1] == Nyertesszamlista[i].Sz5) ||
+
+                   (bekertSzamok[0] == Nyertesszamlista[i].Sz1 && bekertSzamok[2] == Nyertesszamlista[i].Sz1) ||
+                    (bekertSzamok[0] == Nyertesszamlista[i].Sz2 && bekertSzamok[2] == Nyertesszamlista[i].Sz2) ||
+                    (bekertSzamok[0] == Nyertesszamlista[i].Sz3 && bekertSzamok[2] == Nyertesszamlista[i].Sz3) ||
+                    (bekertSzamok[0] == Nyertesszamlista[i].Sz4 && bekertSzamok[2] == Nyertesszamlista[i].Sz4) ||
+                    (bekertSzamok[0] == Nyertesszamlista[i].Sz5 && bekertSzamok[2] == Nyertesszamlista[i].Sz5) ||
+
+                    (bekertSzamok[0] == Nyertesszamlista[i].Sz1 && bekertSzamok[3] == Nyertesszamlista[i].Sz1) ||
+                    (bekertSzamok[0] == Nyertesszamlista[i].Sz2 && bekertSzamok[3] == Nyertesszamlista[i].Sz2) ||
+                    (bekertSzamok[0] == Nyertesszamlista[i].Sz3 && bekertSzamok[3] == Nyertesszamlista[i].Sz3) ||
+                    (bekertSzamok[0] == Nyertesszamlista[i].Sz4 && bekertSzamok[3] == Nyertesszamlista[i].Sz4) ||
+                    (bekertSzamok[0] == Nyertesszamlista[i].Sz5 && bekertSzamok[3] == Nyertesszamlista[i].Sz5) ||
+
+                    (bekertSzamok[0] == Nyertesszamlista[i].Sz1 && bekertSzamok[4] == Nyertesszamlista[i].Sz1) ||
+                    (bekertSzamok[0] == Nyertesszamlista[i].Sz2 && bekertSzamok[4] == Nyertesszamlista[i].Sz2) ||
+                    (bekertSzamok[0] == Nyertesszamlista[i].Sz3 && bekertSzamok[4] == Nyertesszamlista[i].Sz3) ||
+                    (bekertSzamok[0] == Nyertesszamlista[i].Sz4 && bekertSzamok[4] == Nyertesszamlista[i].Sz4) ||
+                    (bekertSzamok[0] == Nyertesszamlista[i].Sz5 && bekertSzamok[4] == Nyertesszamlista[i].Sz5) ||
+
+                    // 2. és x. bekért szám egyezik a nyertes számok sorainak 1.-5. tagjával 
+
+                    (bekertSzamok[1] == Nyertesszamlista[i].Sz1 && bekertSzamok[2] == Nyertesszamlista[i].Sz1) ||
+                    (bekertSzamok[1] == Nyertesszamlista[i].Sz2 && bekertSzamok[2] == Nyertesszamlista[i].Sz2) ||
+                    (bekertSzamok[1] == Nyertesszamlista[i].Sz3 && bekertSzamok[2] == Nyertesszamlista[i].Sz3) ||
+                    (bekertSzamok[1] == Nyertesszamlista[i].Sz4 && bekertSzamok[2] == Nyertesszamlista[i].Sz4) ||
+                    (bekertSzamok[1] == Nyertesszamlista[i].Sz5 && bekertSzamok[2] == Nyertesszamlista[i].Sz5) ||
+
+                    (bekertSzamok[1] == Nyertesszamlista[i].Sz1 && bekertSzamok[3] == Nyertesszamlista[i].Sz1) ||
+                    (bekertSzamok[1] == Nyertesszamlista[i].Sz2 && bekertSzamok[3] == Nyertesszamlista[i].Sz2) ||
+                    (bekertSzamok[1] == Nyertesszamlista[i].Sz3 && bekertSzamok[3] == Nyertesszamlista[i].Sz3) ||
+                    (bekertSzamok[1] == Nyertesszamlista[i].Sz4 && bekertSzamok[3] == Nyertesszamlista[i].Sz4) ||
+                    (bekertSzamok[1] == Nyertesszamlista[i].Sz5 && bekertSzamok[3] == Nyertesszamlista[i].Sz5) ||
+
+                    (bekertSzamok[1] == Nyertesszamlista[i].Sz1 && bekertSzamok[4] == Nyertesszamlista[i].Sz1) ||
+                    (bekertSzamok[1] == Nyertesszamlista[i].Sz2 && bekertSzamok[4] == Nyertesszamlista[i].Sz2) ||
+                    (bekertSzamok[1] == Nyertesszamlista[i].Sz3 && bekertSzamok[4] == Nyertesszamlista[i].Sz3) ||
+                    (bekertSzamok[1] == Nyertesszamlista[i].Sz4 && bekertSzamok[4] == Nyertesszamlista[i].Sz4) ||
+                    (bekertSzamok[1] == Nyertesszamlista[i].Sz5 && bekertSzamok[4] == Nyertesszamlista[i].Sz5) ||
+
+
+                    // 3. és x. bekért szám egyezik a nyertes számok sorainak 1-5 tagjával 
+
+                    (bekertSzamok[2] == Nyertesszamlista[i].Sz1 && bekertSzamok[3] == Nyertesszamlista[i].Sz1) ||
+                    (bekertSzamok[2] == Nyertesszamlista[i].Sz2 && bekertSzamok[3] == Nyertesszamlista[i].Sz2) ||
+                    (bekertSzamok[2] == Nyertesszamlista[i].Sz3 && bekertSzamok[3] == Nyertesszamlista[i].Sz3) ||
+                    (bekertSzamok[2] == Nyertesszamlista[i].Sz4 && bekertSzamok[3] == Nyertesszamlista[i].Sz4) ||
+                    (bekertSzamok[2] == Nyertesszamlista[i].Sz5 && bekertSzamok[3] == Nyertesszamlista[i].Sz5) ||
+
+                    (bekertSzamok[2] == Nyertesszamlista[i].Sz1 && bekertSzamok[4] == Nyertesszamlista[i].Sz1) ||
+                    (bekertSzamok[2] == Nyertesszamlista[i].Sz2 && bekertSzamok[4] == Nyertesszamlista[i].Sz2) ||
+                    (bekertSzamok[2] == Nyertesszamlista[i].Sz3 && bekertSzamok[4] == Nyertesszamlista[i].Sz3) ||
+                    (bekertSzamok[2] == Nyertesszamlista[i].Sz4 && bekertSzamok[4] == Nyertesszamlista[i].Sz4) ||
+                    (bekertSzamok[2] == Nyertesszamlista[i].Sz5 && bekertSzamok[4] == Nyertesszamlista[i].Sz5) ||
+
+                    // 4. és 5. bekért szám egyezik a nyertes számok sorainak 1-5 tagjával 
+
+                    (bekertSzamok[3] == Nyertesszamlista[i].Sz1 && bekertSzamok[4] == Nyertesszamlista[i].Sz1) ||
+                    (bekertSzamok[3] == Nyertesszamlista[i].Sz2 && bekertSzamok[4] == Nyertesszamlista[i].Sz2) ||
+                    (bekertSzamok[3] == Nyertesszamlista[i].Sz3 && bekertSzamok[4] == Nyertesszamlista[i].Sz3) ||
+                    (bekertSzamok[3] == Nyertesszamlista[i].Sz4 && bekertSzamok[4] == Nyertesszamlista[i].Sz4) ||
+                    (bekertSzamok[3] == Nyertesszamlista[i].Sz5 && bekertSzamok[4] == Nyertesszamlista[i].Sz5) )
+                    
+                    
+                    
+                {
+                    
+                    tatalatKettes++;
+                }
+
+            }
+
+            Console.WriteLine("Kettes: " + tatalatKettes);
+
+
+            int tatalatHarmas = 0;
+
+            for (int i = 0; i < Nyertesszamlista.Count; i++)
+            {
+                // 1.-x. bekért szám egyezik a nyertes számok sorainak 1-5. tagjával 
+                if ((bekertSzamok[0] == Nyertesszamlista[i].Sz1 && bekertSzamok[1] == Nyertesszamlista[i].Sz1 && bekertSzamok[2] == Nyertesszamlista[i].Sz1) ||
+                    (bekertSzamok[0] == Nyertesszamlista[i].Sz2 && bekertSzamok[1] == Nyertesszamlista[i].Sz2 && bekertSzamok[2] == Nyertesszamlista[i].Sz2) ||
+                    (bekertSzamok[0] == Nyertesszamlista[i].Sz3 && bekertSzamok[1] == Nyertesszamlista[i].Sz3 && bekertSzamok[2] == Nyertesszamlista[i].Sz3) ||
+                    (bekertSzamok[0] == Nyertesszamlista[i].Sz4 && bekertSzamok[1] == Nyertesszamlista[i].Sz4 && bekertSzamok[2] == Nyertesszamlista[i].Sz4) ||
+                    (bekertSzamok[0] == Nyertesszamlista[i].Sz5 && bekertSzamok[1] == Nyertesszamlista[i].Sz5 && bekertSzamok[2] == Nyertesszamlista[i].Sz5) ||
+
+                    (bekertSzamok[0] == Nyertesszamlista[i].Sz1 && bekertSzamok[2] == Nyertesszamlista[i].Sz1 && bekertSzamok[3] == Nyertesszamlista[i].Sz1) ||
+                    (bekertSzamok[0] == Nyertesszamlista[i].Sz2 && bekertSzamok[2] == Nyertesszamlista[i].Sz2 && bekertSzamok[3] == Nyertesszamlista[i].Sz2) ||
+                    (bekertSzamok[0] == Nyertesszamlista[i].Sz3 && bekertSzamok[2] == Nyertesszamlista[i].Sz3 && bekertSzamok[3] == Nyertesszamlista[i].Sz3) ||
+                    (bekertSzamok[0] == Nyertesszamlista[i].Sz4 && bekertSzamok[2] == Nyertesszamlista[i].Sz4 && bekertSzamok[3] == Nyertesszamlista[i].Sz4) ||
+                    (bekertSzamok[0] == Nyertesszamlista[i].Sz5 && bekertSzamok[2] == Nyertesszamlista[i].Sz5 && bekertSzamok[3] == Nyertesszamlista[i].Sz5) ||
+
+                    (bekertSzamok[0] == Nyertesszamlista[i].Sz1 && bekertSzamok[3] == Nyertesszamlista[i].Sz1 && bekertSzamok[4] == Nyertesszamlista[i].Sz1) ||
+                    (bekertSzamok[0] == Nyertesszamlista[i].Sz2 && bekertSzamok[3] == Nyertesszamlista[i].Sz2 && bekertSzamok[4] == Nyertesszamlista[i].Sz2) ||
+                    (bekertSzamok[0] == Nyertesszamlista[i].Sz3 && bekertSzamok[3] == Nyertesszamlista[i].Sz3 && bekertSzamok[4] == Nyertesszamlista[i].Sz3) ||
+                    (bekertSzamok[0] == Nyertesszamlista[i].Sz4 && bekertSzamok[3] == Nyertesszamlista[i].Sz4 && bekertSzamok[4] == Nyertesszamlista[i].Sz4) ||
+                    (bekertSzamok[0] == Nyertesszamlista[i].Sz5 && bekertSzamok[3] == Nyertesszamlista[i].Sz5 && bekertSzamok[4] == Nyertesszamlista[i].Sz5) ||
+
+                   
+                    // 2. és x. bekért szám egyezik a nyertes számok sorainak 1.-5. tagjával 
+
+                    (bekertSzamok[1] == Nyertesszamlista[i].Sz1 && bekertSzamok[2] == Nyertesszamlista[i].Sz1 && bekertSzamok[3] == Nyertesszamlista[i].Sz1) ||
+                    (bekertSzamok[1] == Nyertesszamlista[i].Sz2 && bekertSzamok[2] == Nyertesszamlista[i].Sz2 && bekertSzamok[3] == Nyertesszamlista[i].Sz2) ||
+                    (bekertSzamok[1] == Nyertesszamlista[i].Sz3 && bekertSzamok[2] == Nyertesszamlista[i].Sz3 && bekertSzamok[3] == Nyertesszamlista[i].Sz3)  ||
+                    (bekertSzamok[1] == Nyertesszamlista[i].Sz4 && bekertSzamok[2] == Nyertesszamlista[i].Sz4 && bekertSzamok[3] == Nyertesszamlista[i].Sz4)  ||
+                    (bekertSzamok[1] == Nyertesszamlista[i].Sz5 && bekertSzamok[2] == Nyertesszamlista[i].Sz5 && bekertSzamok[3] == Nyertesszamlista[i].Sz5) ||
+
+                    (bekertSzamok[1] == Nyertesszamlista[i].Sz1 && bekertSzamok[2] == Nyertesszamlista[i].Sz1 && bekertSzamok[4] == Nyertesszamlista[i].Sz1) ||
+                    (bekertSzamok[1] == Nyertesszamlista[i].Sz2 && bekertSzamok[2] == Nyertesszamlista[i].Sz2 && bekertSzamok[4] == Nyertesszamlista[i].Sz2) ||
+                    (bekertSzamok[1] == Nyertesszamlista[i].Sz3 && bekertSzamok[2] == Nyertesszamlista[i].Sz3 && bekertSzamok[4] == Nyertesszamlista[i].Sz3) ||
+                    (bekertSzamok[1] == Nyertesszamlista[i].Sz4 && bekertSzamok[2] == Nyertesszamlista[i].Sz4 && bekertSzamok[4] == Nyertesszamlista[i].Sz4) ||
+                    (bekertSzamok[1] == Nyertesszamlista[i].Sz5 && bekertSzamok[2] == Nyertesszamlista[i].Sz5 && bekertSzamok[4] == Nyertesszamlista[i].Sz5) ||
+
+                    (bekertSzamok[1] == Nyertesszamlista[i].Sz1 && bekertSzamok[3] == Nyertesszamlista[i].Sz1 && bekertSzamok[4] == Nyertesszamlista[i].Sz1) ||
+                    (bekertSzamok[1] == Nyertesszamlista[i].Sz2 && bekertSzamok[3] == Nyertesszamlista[i].Sz2 && bekertSzamok[4] == Nyertesszamlista[i].Sz2) ||
+                    (bekertSzamok[1] == Nyertesszamlista[i].Sz3 && bekertSzamok[3] == Nyertesszamlista[i].Sz3 && bekertSzamok[4] == Nyertesszamlista[i].Sz3) ||
+                    (bekertSzamok[1] == Nyertesszamlista[i].Sz4 && bekertSzamok[3] == Nyertesszamlista[i].Sz4 && bekertSzamok[4] == Nyertesszamlista[i].Sz4) ||
+                    (bekertSzamok[1] == Nyertesszamlista[i].Sz5 && bekertSzamok[3] == Nyertesszamlista[i].Sz5 && bekertSzamok[4] == Nyertesszamlista[i].Sz5) ||
+
+                    (bekertSzamok[2] == Nyertesszamlista[i].Sz1 && bekertSzamok[3] == Nyertesszamlista[i].Sz1 && bekertSzamok[4] == Nyertesszamlista[i].Sz1) ||
+                    (bekertSzamok[2] == Nyertesszamlista[i].Sz2 && bekertSzamok[3] == Nyertesszamlista[i].Sz2 && bekertSzamok[4] == Nyertesszamlista[i].Sz2) ||
+                    (bekertSzamok[2] == Nyertesszamlista[i].Sz3 && bekertSzamok[3] == Nyertesszamlista[i].Sz3 && bekertSzamok[4] == Nyertesszamlista[i].Sz3) ||
+                    (bekertSzamok[2] == Nyertesszamlista[i].Sz4 && bekertSzamok[3] == Nyertesszamlista[i].Sz4 && bekertSzamok[4] == Nyertesszamlista[i].Sz4) ||
+                    (bekertSzamok[2] == Nyertesszamlista[i].Sz5 && bekertSzamok[3] == Nyertesszamlista[i].Sz5 && bekertSzamok[4] == Nyertesszamlista[i].Sz5) ||
+                                                            
+                    )
+
+                {
+                     tatalatHarmas++;
+                }
+
+            }
+
+            Console.WriteLine("Hármas: " + tatalatHarmas);
+
+            int tatalatNegyes = 0;
+
+            for (int i = 0; i < Nyertesszamlista.Count; i++)
+            {
+                // 1.-x. bekért szám egyezik a nyertes számok sorainak 1-5. tagjával 
+                if (
+                    (bekertSzamok[0] == Nyertesszamlista[i].Sz1 && bekertSzamok[1] == Nyertesszamlista[i].Sz1 && bekertSzamok[2] == Nyertesszamlista[i].Sz1 && bekertSzamok[3] == Nyertesszamlista[i].Sz1) ||
+                    (bekertSzamok[0] == Nyertesszamlista[i].Sz2 && bekertSzamok[1] == Nyertesszamlista[i].Sz2 && bekertSzamok[2] == Nyertesszamlista[i].Sz2 && bekertSzamok[3] == Nyertesszamlista[i].Sz2) ||
+                    (bekertSzamok[0] == Nyertesszamlista[i].Sz3 && bekertSzamok[1] == Nyertesszamlista[i].Sz3 && bekertSzamok[2] == Nyertesszamlista[i].Sz3 && bekertSzamok[3] == Nyertesszamlista[i].Sz3) ||
+                    (bekertSzamok[0] == Nyertesszamlista[i].Sz4 && bekertSzamok[1] == Nyertesszamlista[i].Sz4 && bekertSzamok[2] == Nyertesszamlista[i].Sz4 && bekertSzamok[3] == Nyertesszamlista[i].Sz4) ||
+                    (bekertSzamok[0] == Nyertesszamlista[i].Sz5 && bekertSzamok[1] == Nyertesszamlista[i].Sz5 && bekertSzamok[2] == Nyertesszamlista[i].Sz5 && bekertSzamok[3] == Nyertesszamlista[i].Sz5) ||
+
+                    (bekertSzamok[0] == Nyertesszamlista[i].Sz1 && bekertSzamok[2] == Nyertesszamlista[i].Sz1 && bekertSzamok[3] == Nyertesszamlista[i].Sz1 && bekertSzamok[4] == Nyertesszamlista[i].Sz1) ||
+                    (bekertSzamok[0] == Nyertesszamlista[i].Sz2 && bekertSzamok[2] == Nyertesszamlista[i].Sz2 && bekertSzamok[3] == Nyertesszamlista[i].Sz2 && bekertSzamok[4] == Nyertesszamlista[i].Sz2) ||
+                    (bekertSzamok[0] == Nyertesszamlista[i].Sz3 && bekertSzamok[2] == Nyertesszamlista[i].Sz3 && bekertSzamok[3] == Nyertesszamlista[i].Sz3 && bekertSzamok[4] == Nyertesszamlista[i].Sz3) ||
+                    (bekertSzamok[0] == Nyertesszamlista[i].Sz4 && bekertSzamok[2] == Nyertesszamlista[i].Sz4 && bekertSzamok[3] == Nyertesszamlista[i].Sz4 && bekertSzamok[4] == Nyertesszamlista[i].Sz4) ||
+                    (bekertSzamok[0] == Nyertesszamlista[i].Sz5 && bekertSzamok[2] == Nyertesszamlista[i].Sz5 && bekertSzamok[3] == Nyertesszamlista[i].Sz5 && bekertSzamok[4] == Nyertesszamlista[i].Sz5) ||
+
+
+                     (bekertSzamok[1] == Nyertesszamlista[i].Sz1 && bekertSzamok[2] == Nyertesszamlista[i].Sz1 && bekertSzamok[3] == Nyertesszamlista[i].Sz1 && bekertSzamok[4] == Nyertesszamlista[i].Sz1) ||
+                    (bekertSzamok[1] == Nyertesszamlista[i].Sz2 && bekertSzamok[2] == Nyertesszamlista[i].Sz2 && bekertSzamok[3] == Nyertesszamlista[i].Sz2 && bekertSzamok[4] == Nyertesszamlista[i].Sz2) ||
+                    (bekertSzamok[1] == Nyertesszamlista[i].Sz3 && bekertSzamok[2] == Nyertesszamlista[i].Sz3 && bekertSzamok[3] == Nyertesszamlista[i].Sz3 && bekertSzamok[4] == Nyertesszamlista[i].Sz3) ||
+                    (bekertSzamok[1] == Nyertesszamlista[i].Sz4 && bekertSzamok[2] == Nyertesszamlista[i].Sz4 && bekertSzamok[3] == Nyertesszamlista[i].Sz4 && bekertSzamok[4] == Nyertesszamlista[i].Sz4) ||
+                    (bekertSzamok[1] == Nyertesszamlista[i].Sz5 && bekertSzamok[2] == Nyertesszamlista[i].Sz5 && bekertSzamok[3] == Nyertesszamlista[i].Sz5 && bekertSzamok[4] == Nyertesszamlista[i].Sz5) 
+                   )
+
+                {
+                    tatalatNegyes++;
+                }
+
+            }
+
+            Console.WriteLine("Négyes: " + tatalatNegyes);
+
+
+            //int db = 0; 
+
+            //for (int i = 0; i < Nyertesszamlista.Count; i++)
+            //{
+            //    for (int j = 0; j < bekertSzamok.Length; j++)
+            //    {
+            //        if (Nyertesszamlista[i].Sz1 == bekertSzamok[j])
+            //        {
+            //            db++;
+            //        }
+            //    } 
+            //}
+
+            //Console.WriteLine("aaa" + db);
+
+            //var aaa = Nyertesszamlista.FindIndex(x => x.Sz1 == bekertSzamok[0] && x.Sz2 == bekertSzamok[1]);
+
+            //Console.WriteLine("szorszám " + aaa);
+
+
+            //for (int i = 0; i < Nyertesszamlista.Count; i++)
+            //{
+            //    //Nyertesszamlista[i].Sz1 Contains(bekertSzamok[0]);
+            //    Nyertesszamlista[i].Contains(bekertSzamok[0]);
+            //}
+
+
+            int tatalatOtos = 0;
+
+            for (int i = 0; i < Nyertesszamlista.Count; i++)
+            {
+                if (bekertSzamok[0] == Nyertesszamlista[i].Sz1 && bekertSzamok[1] == Nyertesszamlista[i].Sz2
+                    && bekertSzamok[2] == Nyertesszamlista[i].Sz3 && bekertSzamok[3] == Nyertesszamlista[i].Sz4
+                    && bekertSzamok[4] == Nyertesszamlista[i].Sz5)
+                {
+
+                    tatalatOtos++;
+                }
+            }
+
+            Console.WriteLine("Ötös: " + tatalatOtos);
+
+
         }
 
-        /*  static void Kiertekel()
-          {
-              Console.WriteLine("a keresett számok: " + szam1 + szam2 + szam3 + szam4 + szam5);
 
-            while (i < t.Length && t[i] != szam)
-              {
-                  i++;
-              }
-
-              int talalat = 0;
-
-
-              switch (talalat) 
-              {
-                  case 5:
-
-                      break;
-                  case 4:
-                      break;
-                  case 3:
-                      break;
-                  case 2:
-                      break;
-                  case 1:
-                      break;
-                  case 0:
-                      break; 
-                  default:
-                      break; 
-
-              }
-
-
-
-          }*/
 
         static void Main(string[] args)
         {
 
             Bekeres();
-            Beolvas();
-            //  Kiertekel();
-            hanyszor(szam1, szam2);
+            Beolvas();            
+            hanyszor();
 
             Console.ReadLine();
 

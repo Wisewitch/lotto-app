@@ -1,0 +1,7 @@
+C:\Users\ági\source\repos\lottos-app2\bin\Debug\lottos-app2.exe.config
+C:\Users\ági\source\repos\lottos-app2\bin\Debug\lottos-app2.exe
+C:\Users\ági\source\repos\lottos-app2\bin\Debug\lottos-app2.pdb
+C:\Users\ági\source\repos\lottos-app2\obj\Debug\lottos-app2.csprojAssemblyReference.cache
+C:\Users\ági\source\repos\lottos-app2\obj\Debug\lottos-app2.csproj.CoreCompileInputs.cache
+C:\Users\ági\source\repos\lottos-app2\obj\Debug\lottos-app2.exe
+C:\Users\ági\source\repos\lottos-app2\obj\Debug\lottos-app2.pdb
